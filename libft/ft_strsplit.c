@@ -38,12 +38,10 @@ char			**ft_strsplit(char const *s, char c)
 {
 	char	**arr;
 	int		i;
-	int		j;
 	int		wc;
 	int		len;
 
 	i = 0;
-	j = 0;
 	if (!s)
 		return (NULL);
 	wc = count_words(s, c);

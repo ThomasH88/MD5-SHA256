@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-int			flag_parsing(char *s, unsigned char *flags)
+/*int			flag_parsing(char *s, unsigned char *flags)
 {
 	while (s && *s)
 	{
@@ -39,4 +39,4 @@ int			isvalid_flag(char c)
 	if (*c == 'p' || *c == 'q' || *c == 'r' || *c == 's')
 		return (1);
 	return (0);
-}
+}*/

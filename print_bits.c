@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_ssl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/18 10:41:29 by tholzheu          #+#    #+#             */
-/*   Updated: 2018/09/18 19:25:05 by tholzheu         ###   ########.fr       */
+/*   Created: 2018/11/19 08:49:42 by tholzheu          #+#    #+#             */
+/*   Updated: 2018/11/19 09:17:21 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_ssl.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	print_bits(unsigned char c)
 {
-	unsigned char	a;
-	unsigned char	*p1;
-	unsigned char	*p2;
-	int				i;
+	unsigned int	i;
 
-	i = 0;
-	a = (unsigned char)c;
-	p1 = (unsigned char *)dst;
-	p2 = (unsigned char *)src;
-	while (n > 0)
+	i = 256;
+	while (i >>= 1)
+		ft_printf((i & c) ? "1" : "0");
+	ft_printf("\n");
+}
+
+void	print_bits_str(unsigned char *s)
+{
+	while (*s)
 	{
-		p1[i] = *p2;
-		if (*p2 == a)
-			return (&dst[i + 1]);
-		i++;
-		p2++;
-		n--;
+		print_bits(*s);
+		s++;
 	}
-	return (NULL);
+	print_bits(*s);
+}
+
+void	print_nbits_str(unsigned char *s, size_t beg, size_t end)
+{
+	while (beg <= end)
+		print_bits(s[beg++]);
 }

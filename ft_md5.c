@@ -12,7 +12,7 @@
 
 #include "ft_ssl.h"
 
-void		ft_md5(char **args)
+/*void		ft_md5(char **args)
 {
 	unsigned char	flags;
 	int				i;
@@ -22,15 +22,13 @@ void		ft_md5(char **args)
 	count = 0;
 	flags = 0;
 	if (args[i] == NULL)
-		algo_md5(fd_to_str(0), 0);//char * has to be freed in algo_md5
+		algo_md5(fd_to_str(0), 0);
 	while (args[i])
 	{
 		if (args[i][0] == '-')
 		{
 			if (flag_parsing(args[i], &flags) == 
 		}
-		/*
 		** if wrong file all the next arguments are treated as files
-		*/
 	}
-}
+}*/

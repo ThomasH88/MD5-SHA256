@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <limits.h>
+# include <stdint.h>
 
 # define PW7 128
 # define PW6 64

@@ -21,8 +21,12 @@ LIB2 = ft_printf/libftprintf.a
 FLAGS = -Wall -Werror -Wextra -o
 
 SRCS = ft_ssl.c \
-	   ft_md5.c \
-	   flags.c \
+       ft_md5.c \
+       flags.c \
+       print_bits.c \
+       algo_md5.c \
+       side_md5.c \
+       side_funct.c
 
 SRCO = $(SRCS:.c=.o)
 

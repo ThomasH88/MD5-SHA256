@@ -12,35 +12,26 @@
 
 #include "ft_ssl.h"
 
-void		algo_sha256(unsigned char *s)
+void	msg_len_to_64bit(size_t msg_len, unsigned char msg_64bit_len[64])
 {
-	(void)s;
-}
+	int	i;
 
-static void	init_algoList(t_algoList algoList[HF_COUNT])
-{
-	algoList[0].name = "md5";
-	algoList[0].algorithm = &algo_md5;
-	algoList[1].name = "sha256";
-	algoList[1].algorithm = &algo_sha256;
-}
-
-int		main(int argc, char **argv)
-{
-	t_algoList	algoList[HF_COUNT];
-	int			i;
-
-	i = 0;
-	init_algoList(algoList);
-	if (argc == 1)
-		return (ft_printf("usage: ft_ssl command [command opts] [command args]\n"));
-	while (i < HF_COUNT)
+	i = 63;
+	while (msg_len >= 1)
 	{
-		if (ft_strequ(algoList[i].name, argv[1]))
-			break ;
-		i++;
+		msg_64bit_len[i--] = msg_len % 2;
+		msg_len /= 2;
 	}
-	if (i == HF_COUNT)
-		return (ft_printf("ft_ssl: Error: '%s' is an invalid command.\n", argv[1]));
-	algoList[i].algorithm((unsigned char *)argv[2]);
+	while (i >= 0)
+		msg_64bit_len[i--] = 0;
+}
+
+void	add_64bit_len(unsigned char *c, unsigned char msg_64bit_len[64], int n)
+{
+	int	i;
+
+	i = 256;
+	while (i >>= 1)
+		if (msg_64bit_len[n++] == 1)
+			*c = *c | i;
 }

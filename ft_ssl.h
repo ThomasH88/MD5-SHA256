@@ -21,15 +21,41 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 
-# define FLAG_Q 1
-# define FLAG_R 2
+# define HF_COUNT 2
 
-void		ft_md5(char **args);
+void			print_bits(unsigned char c);
+void			print_bits_str(unsigned char *s);
+void			print_nbits_str(unsigned char *s, size_t beg, size_t end);
+
+typedef			void t_algorithm(unsigned char *s);
+
+typedef struct 		s_algoList
+{
+	char		*name;
+	t_algorithm	*algorithm;
+}			t_algoList;
 
 /*
 ** flags
 */
-int			isvalid_flag(char *s);
+//int			isvalid_flag(char *s);
 
+
+/*
+** md5
+*/
+void			algo_md5(unsigned char *s);
+
+/*
+** side_md5
+*/
+void			msg_len_to_64bit(size_t msg_len, unsigned char msg_64bit_len[64]);
+void			add_64bit_len(unsigned char *c, unsigned char msg_64bit_len[64], int n);
+
+/*
+** side_funct
+*/
+void			u_char_copy(unsigned char *src, unsigned char *dst, size_t len);
+unsigned long long	ft_pow(int nb, int pow);
 
 #endif
