@@ -6,13 +6,13 @@
 #    By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/10 16:42:11 by tholzheu          #+#    #+#              #
-#    Updated: 2018/11/19 11:19:54 by tholzheu         ###   ########.fr        #
+#    Updated: 2019/04/06 16:49:45 by tholzheu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ssl
 
-HEADER = ft_ssl.h
+HEADER = $(addprefix includes/, ft_ssl.h)
 
 LIB1 = libft/libft.a
 
@@ -20,13 +20,13 @@ LIB2 = ft_printf/libftprintf.a
 
 FLAGS = -Wall -Werror -Wextra -o
 
-SRCS = ft_ssl.c \
+SRCS = $(addprefix srcs/, ft_ssl.c \
        ft_md5.c \
        flags.c \
        print_bits.c \
        algo_md5.c \
        side_md5.c \
-       side_funct.c
+       side_funct.c)
 
 SRCO = $(SRCS:.c=.o)
 
