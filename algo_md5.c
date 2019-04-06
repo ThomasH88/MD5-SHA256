@@ -6,7 +6,7 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 08:49:42 by tholzheu          #+#    #+#             */
-/*   Updated: 2018/11/19 09:17:21 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/01/30 11:14:33 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	padding_bits(unsigned char *new, size_t msg_len, size_t new_len)
 	int		n;
 	unsigned char	msg_64bit_len[64];
 
-	//ft_printf("msg_len = %llu  new_len = %llu\n", msg_len, new_len);
+	ft_printf("msg_len = %llu  new_len = %llu\n", msg_len, new_len);
 	new[msg_len] = 128; //append a single 1 bit followed by 0's
 	i = msg_len + 1;
 	while (i < new_len - 8)
@@ -36,7 +36,7 @@ static void	padding_bits(unsigned char *new, size_t msg_len, size_t new_len)
 		add_64bit_len(&new[i++], msg_64bit_len, n);
 		n += 8;
 	}
-	//print_nbits_str(new, 0, 127);
+	print_nbits_str(new, 0, 63);
 }
 
 void		algo_md5(unsigned char *s)
