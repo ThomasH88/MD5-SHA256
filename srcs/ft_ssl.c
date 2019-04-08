@@ -6,21 +6,21 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 08:49:42 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/04/06 16:52:10 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/04/08 15:54:15 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-void		algo_sha256(unsigned char *s)
+void		algo_sha256(char **args)
 {
-	(void)s;
+	(void)args;
 }
 
 static void	init_algoList(t_algoList algoList[HF_COUNT])
 {
 	algoList[0].name = "md5";
-	algoList[0].algorithm = &algo_md5;
+	algoList[0].algorithm = &ft_md5;
 	algoList[1].name = "sha256";
 	algoList[1].algorithm = &algo_sha256;
 }
@@ -41,6 +41,6 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	if (i == HF_COUNT)
-		return (ft_printf("ft_ssl: Error: '%s' is an invalid command.\n", argv[1]));
-	algoList[i].algorithm((unsigned char *)argv[2]);
+		return (exit_errors(0, argv[1]));
+	algoList[i].algorithm(argv + 2);
 }

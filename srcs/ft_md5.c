@@ -5,30 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 09:01:43 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/04/06 16:51:52 by tholzheu         ###   ########.fr       */
+/*   Created: 2019/04/07 13:48:11 by tholzheu          #+#    #+#             */
+/*   Updated: 2019/04/08 16:16:28 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-/*void		ft_md5(char **args)
+static void		output_formatting_md5(t_flags *flags, char *msg, int is_file)
 {
-	unsigned char	flags;
-	int				i;
-	int				count;
+	if (flags->p == 1 && flags->p_done == 0)
+	{
+		flags->p_done = 1;
+		flags->p = 0;
+		ft_printf("%s\nmsg digest\n", msg);
+	}
+	else
+	{
+		if (is_file == 0 && msg == NULL)
+			exit_errors(1, NULL);
+		if (is_file)
+			ft_printf("function that gets the file name '%s' and returns the file as a string\n", msg);
+		if (flags->q)
+			ft_printf("MD5 msg digest of '%s'\n", msg);
+		else if (flags->r)
+			ft_printf("MD5 msg digest \"%s\"\n", msg);
+		else
+			ft_printf("MD5 (\"%s\") = msg digest\n", msg);
+	}
+}
+
+void			ft_md5(char **args)
+{
+	int			i;
+	int			j;
+	t_flags		flags;
 
 	i = 0;
-	count = 0;
-	flags = 0;
-	if (args[i] == NULL)
-		algo_md5(fd_to_str(0), 0);
-	while (args[i])
+	init_flags(&flags);
+	while (args && args[i])
 	{
-		if (args[i][0] == '-')
-		{
-			if (flag_parsing(args[i], &flags) == 
-		}
-		** if wrong file all the next arguments are treated as files
+		j = 0;
+		if (flags.done == 0 && args[i][j] && args[i][j] == '-')
+			while(args[i][++j])
+			{
+				if (update_flags(&flags, args[i][j]) == 1)
+				{
+					if (args[i][j + 1])
+						output_formatting_md5(&flags, args[i] + j + 1, 0);
+					else
+						output_formatting_md5(&flags, args[++i], 0);
+				}
+				if (flags.p == 1 && flags.p_done == 0)
+					output_formatting_md5(&flags, read_from_fd(0), 0);
+				else if (flags.p == 1 && flags.p--)
+					ft_printf("d41d8cd98f00b204e9800998ecf8427e\n");
+			}
+		else if ((flags.done = 1))
+			output_formatting_md5(&flags, args[i], 1);
+		i++;
 	}
-}*/
+}

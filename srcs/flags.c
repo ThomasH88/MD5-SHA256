@@ -5,38 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 11:19:04 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/04/06 16:51:33 by tholzheu         ###   ########.fr       */
+/*   Created: 2019/04/07 14:25:49 by tholzheu          #+#    #+#             */
+/*   Updated: 2019/04/08 16:16:01 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-/*int			flag_parsing(char *s, unsigned char *flags)
+void	init_flags(t_flags *flags)
 {
-	while (s && *s)
-	{
-		if (!isvalid_flag(*s))
-			return (-1);//stop reading args
-		else if (*s == 's' && *(s + 1))
-		{
-			algo_md5(s + 1, *flags);
-			return (0);//do nothing and go to next arg
-		}
-		else if (*s == 's')
-			return (1);//treat next arg as string
-		else if (*s == 'p')
-			algo_md5(fd_to_str(0), 0);
-		else if (*s == 'q')
-			*flags = FLAG_Q;
-		else if (*s == 'r' && *flags == 0)
-			*flags = FLAG_R;
-	}
+	flags->p = 0;
+	flags->p_done = 0;
+	flags->q = 0;
+	flags->r = 0;
+	flags->s = 0;
+	flags->done = 0;
 }
 
-int			isvalid_flag(char c)
+int		update_flags(t_flags *flags, char c)
 {
-	if (*c == 'p' || *c == 'q' || *c == 'r' || *c == 's')
+	if (c == 'p')
+		flags->p = 1;
+	else if (c == 'q')
+	{
+		flags->q = 1;
+		flags->r = 0;
+	}
+	else if (c == 'r' && flags->q == 0)
+		flags->r = 1;
+	else if (c == 's')
 		return (1);
 	return (0);
-}*/
+}

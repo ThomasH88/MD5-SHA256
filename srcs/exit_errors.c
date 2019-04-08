@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl.c                                           :+:      :+:    :+:   */
+/*   exit_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:49:42 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/04/07 11:58:00 by tholzheu         ###   ########.fr       */
+/*   Created: 2019/04/08 15:02:56 by tholzheu          #+#    #+#             */
+/*   Updated: 2019/04/08 15:59:12 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-void	print_bits(unsigned char c)
+int		exit_errors(int error_code, char *arg)
 {
-	unsigned int	i;
-
-	i = 256;
-	while (i >>= 1)
-		ft_printf((i & c) ? "1" : "0");
-	ft_printf("\n");
-}
-
-void	print_bits_str(unsigned char *s)
-{
-	while (*s)
+	if (error_code == 0)
 	{
-		print_bits(*s);
-		s++;
+		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n");
+		ft_printf("Standard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\n");
+		ft_printf("Cipher commands:\n", arg);
 	}
-	print_bits(*s);
-}
-
-void	print_nbits_str(unsigned char *s, size_t beg, size_t end)
-{
-	while (beg <= end)
-		print_bits(s[beg++]);
+	if (error_code == 1)
+		exit(ft_printf("md5: option requires an argument -- s\nusage: md5 [-pqr] [-s string] [files ...]\n"));
+	return (-1);
 }

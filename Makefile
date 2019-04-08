@@ -6,7 +6,7 @@
 #    By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/10 16:42:11 by tholzheu          #+#    #+#              #
-#    Updated: 2019/04/06 16:49:45 by tholzheu         ###   ########.fr        #
+#    Updated: 2019/04/08 15:43:58 by tholzheu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,15 @@ LIB2 = ft_printf/libftprintf.a
 
 FLAGS = -Wall -Werror -Wextra -o
 
-SRCS = $(addprefix srcs/, ft_ssl.c \
-       ft_md5.c \
-       flags.c \
-       print_bits.c \
+SRCS = $(addprefix srcs/, \
        algo_md5.c \
-       side_md5.c \
-       side_funct.c)
+	   exit_errors.c \
+       flags.c \
+       ft_md5.c \
+	   ft_ssl.c \
+       print_bits.c \
+       side_funct.c \
+       side_md5.c)
 
 SRCO = $(SRCS:.c=.o)
 
