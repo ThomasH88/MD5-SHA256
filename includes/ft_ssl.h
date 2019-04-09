@@ -6,7 +6,7 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 08:29:26 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/04/08 16:15:55 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/04/08 21:11:18 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <sys/uio.h>
 
 # define HF_COUNT 2
+# define WORD_A 0x01234567
+# define WORD_B 0x89abcdef
+# define WORD_C 0xfedcba98
+# define WORD_D 0x76543210
 
 void				print_bits(unsigned char c);
 void				print_bits_str(unsigned char *s);
