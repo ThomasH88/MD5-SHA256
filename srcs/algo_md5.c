@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl.c                                           :+:      :+:    :+:   */
+/*   algo_md5.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:49:42 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/04/08 21:11:39 by tholzheu         ###   ########.fr       */
+/*   Created: 2019/05/09 14:59:50 by tholzheu          #+#    #+#             */
+/*   Updated: 2019/05/09 20:41:24 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
-#include <stdio.h>
 
 static unsigned char	*auxiliary_functions(char *name, unsigned char *x, unsigned char *y, unsigned char *z)
 {
-	if (name == "F")
-		return ((x & y) | (~x & z));
-	else if (name == "G")
-		return ((x & z) | (y & ~z));
-	else if (name == "H")
-		return (x ^ y ^ z);
-	return (y ^ (x | ~z));
+	if (name[0] == 'F')
+		return (bitwise_or(bitwise_and(x, y), bitwise_and(bitwise_complement(x), z)));
+	else if (name[0] == 'G')
+		return (bitwise_or(bitwise_and(x, z), bitwise_and(y, bitwise_complement(z))));
+	else if (name[0] == 'H')
+		return (bitwise_xor(x, bitwise_xor(y, z)));
+	return (bitwise_xor(y, bitwise_or(x, bitwise_complement(z))));
 }
 
 static void				padding_bits(unsigned char *new, size_t msg_len, size_t new_len)
@@ -55,9 +54,7 @@ void					algo_md5(unsigned char *s)
 	size_t			msg_len;
 	size_t			new_len;
 	unsigned char	*new;
-	unsigned int	table[64];
 
-	fill_table(table);
 	msg_len = (ft_strlen((char *)s) + 1);//+1 because of the \0
 	new_len = 64 - msg_len % 64 + msg_len;
 	new_len += (64 - msg_len % 64 <= 8) ? 64 : 0;
@@ -66,4 +63,5 @@ void					algo_md5(unsigned char *s)
 	u_char_copy(s, new, msg_len);
 	padding_bits(new, msg_len, new_len);
 	print_nbits_str(new, 0, 127);
+	process_message(new, new_len);
 }
