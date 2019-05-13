@@ -1,0 +1,35 @@
+rm md5_test
+rm ft_md5_test
+cd ..
+make re
+cd testing
+mv ../ft_ssl .
+
+echo "pickle rick" | ./ft_ssl md5 >> ft_md5_test
+echo "Do not pity the dead, Harry." | ./ft_ssl md5 -p >> ft_md5_test
+echo "Pity the living." | ./ft_ssl md5 -q -r >> ft_md5_test
+./ft_ssl md5 file >> ft_md5_test
+./ft_ssl md5 -r file >> ft_md5_test
+./ft_ssl md5 -s "pity those that aren't following baerista on spotify." >> ft_md5_test
+echo "be sure to handle edge cases carefully" | ./ft_ssl md5 -p file >> ft_md5_test
+echo "some of this will not make sense at first" | ./ft_ssl md5 file >> ft_md5_test
+echo "but eventually you will understand" | ./ft_ssl md5 -p -r file >> ft_md5_test
+echo "GL HF let's go" | ./ft_ssl md5 -p -s "foo" file >> ft_md5_test
+echo "one more thing" | ./ft_ssl md5 -r -p -s "foo" file -s "bar" >> ft_md5_test
+echo "just to be extra clear" | ./ft_ssl md5 -r -q -p -s "foo" file 2_file >> ft_md5_test
+
+echo "pickle rick" | md5 >> md5_test 2>&1
+echo "Do not pity the dead, Harry." | md5 -p >> md5_test 2>&1
+echo "Pity the living." | md5 -q -r >> md5_test 2>&1
+md5 file >> md5_test 2>&1
+md5 -r file >> md5_test 2>&1
+md5 -s "pity those that aren't following baerista on spotify." >> md5_test 2>&1
+echo "be sure to handle edge cases carefully" | md5 -p file >> md5_test 2>&1
+echo "some of this will not make sense at first" | md5 file >> md5_test 2>&1
+echo "but eventually you will understand" | md5 -p -r file >> md5_test 2>&1
+echo "GL HF let's go" | md5 -p -s "foo" file >> md5_test 2>&1
+echo "one more thing" | md5 -r -p -s "foo" file -s "bar" >> md5_test 2>&1
+echo "just to be extra clear" | md5 -r -q -p -s "foo" file 2_file >> md5_test 2>&1
+
+mv ft_ssl ..
+diff md5_test ft_md5_test

@@ -6,7 +6,7 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 11:27:45 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/12 19:46:54 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 10:56:45 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void		print_message_digest_sha256(t_vars_sha256 *vars)
 	}
 }
 
-void			algo_sha256(unsigned char *s)
+void			algo_sha256(unsigned char *s, int var)
 {
 	size_t			msg_len;
 	size_t			new_len;
@@ -86,6 +86,8 @@ void			algo_sha256(unsigned char *s)
 	if (!(new = (unsigned char *)ft_strnew(new_len)))
 		exit(ft_printf("malloc error\n"));
 	u_char_copy(s, new, msg_len);
+	if (var == 1)
+		free(s);
 	padding_bits_sha256(new, msg_len, new_len);
 	vars.v[0] = 0x6a09e667;
 	vars.v[1] = 0xbb67ae85;
@@ -97,4 +99,5 @@ void			algo_sha256(unsigned char *s)
 	vars.v[7] = 0x5be0cd19;
 	process_message_sha256(new, new_len, &vars);
 	print_message_digest_sha256(&vars);
+	free(new);
 }

@@ -6,7 +6,7 @@
 #    By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/10 16:42:11 by tholzheu          #+#    #+#              #
-#    Updated: 2019/05/12 15:15:03 by tholzheu         ###   ########.fr        #
+#    Updated: 2019/05/13 10:48:11 by tholzheu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ FLAGS = -Wall -Werror -Wextra -o
 
 SRCS = $(addprefix srcs/, \
        algo_md5.c \
-       bitwise_words.c \
 	   exit_errors.c \
        flags.c \
        ft_md5.c \

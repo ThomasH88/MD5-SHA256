@@ -6,7 +6,7 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 08:29:26 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/12 20:19:02 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 11:25:34 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 
-#include <stdio.h> //laskdjjjjjjjjjjjjjjjjjjjjaflsakdjfalksjdfl
-
 # define HF_COUNT 2
 # define WORD_A 0x67452301
 # define WORD_B 0xefcdab89
@@ -33,7 +31,7 @@ void				print_bits(unsigned char c);
 void				print_bits_str(unsigned char *s);
 void				print_nbits_str(unsigned char *s, size_t beg, size_t end);
 
-typedef struct 		s_flags
+typedef struct		s_flags
 {
 	int				p;
 	int				p_done;
@@ -66,25 +64,18 @@ typedef struct		s_side_vars_sha256
 	unsigned int	tmp2;
 }					t_side_vars_sha256;
 
-typedef				void t_algorithm(char **args);
-typedef struct 		s_algoList
+typedef void		t_algorithm(char **args);
+
+typedef struct		s_algolist
 {
 	char			*name;
 	t_algorithm		*algorithm;
-}					t_algoList;
+}					t_algolist;
 
 /*
 ** algo_md5
 */
-unsigned char		*auxiliary_functions(char *name, unsigned char *x, unsigned char *y, unsigned char *z);
-
-/*
-** bitwise_words
-*/
-unsigned char		*bitwise_and(unsigned char *a, unsigned char *b);
-unsigned char		*bitwise_or(unsigned char *a, unsigned char *b);
-unsigned char		*bitwise_xor(unsigned char *a, unsigned char *b);
-unsigned char		*bitwise_complement(unsigned char *a);
+void				algo_md5(unsigned char *s, int var);
 
 /*
 ** exit_errors
@@ -100,13 +91,13 @@ int					update_flags(t_flags *flags, char *s, int *j);
 /*
 ** md5
 */
-void				algo_md5(unsigned char *s);
 void				ft_md5(char **args);
 
 /*
 ** process_message_md5
 */
-void				process_message(unsigned char *new, size_t new_len, unsigned int words_0[4]);
+void				process_message(unsigned char *new, size_t new_len,
+									unsigned int words_0[4]);
 
 /*
 ** side_funct
@@ -115,20 +106,22 @@ unsigned int		rightrotate(unsigned int nb, int rot);
 unsigned int		leftrotate(unsigned int nb, int rot);
 char				*file_to_string(char *name);
 char				*read_from_fd(int fd);
-void				u_char_copy(unsigned char *src, unsigned char *dst, size_t len);
+void				u_char_copy(unsigned char *src, unsigned char *dst,
+								size_t len);
 
 /*
 ** side_md5
 */
-void				msg_len_to_64bit(size_t msg_len, unsigned char msg_64bit_len[64]);
-void				add_64bit_len(unsigned char *c, unsigned char msg_64bit_len[64], int n);
+void				msg_len_to_64bit(size_t msg_len,
+									unsigned char msg_64bit_len[64]);
+void				add_64bit_len(unsigned char *c,
+									unsigned char msg_64bit_len[64], int n);
 unsigned int		uchar_ptr_to_uint(unsigned char *s);
-unsigned char		*uint_to_uchar_ptr(unsigned int nb);
 
 /*
 ** algo_sha256
 */
-void				algo_sha256(unsigned char *s);
+void				algo_sha256(unsigned char *s, int var);
 
 /*
 ** ft_sha256
@@ -138,6 +131,7 @@ void				ft_sha256(char **args);
 /*
 ** process_message_sha256
 */
-void				process_message_sha256(unsigned char *new, size_t new_len, t_vars_sha256 *vars);
+void				process_message_sha256(unsigned char *new, size_t new_len,
+											t_vars_sha256 *vars);
 
 #endif

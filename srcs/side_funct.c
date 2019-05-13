@@ -6,18 +6,18 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/11 12:33:21 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/12 18:43:14 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 11:19:36 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-unsigned int			rightrotate(unsigned int nb, int rot)
+unsigned int	rightrotate(unsigned int nb, int rot)
 {
 	return ((nb >> rot) | (nb << (32 - rot)));
 }
 
-unsigned int			leftrotate(unsigned int nb, int rot)
+unsigned int	leftrotate(unsigned int nb, int rot)
 {
 	return ((nb << rot) | (nb >> (32 - rot)));
 }
@@ -39,8 +39,8 @@ char			*read_from_fd(int fd)
 
 	i = 0;
 	ft_bzero(buff, 10000 + 1);
-	str = ft_strnew(1000000); // have to free this
-	while((n = read(fd, buff, 10000)) > 0)
+	str = ft_strnew(1000000);
+	while ((n = read(fd, buff, 10000)) > 0)
 	{
 		ft_strcpy(&str[i], buff);
 		ft_bzero(buff, 10000 + 1);

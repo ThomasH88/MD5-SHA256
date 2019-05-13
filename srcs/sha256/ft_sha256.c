@@ -6,7 +6,7 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 11:13:16 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/12 19:51:23 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 10:57:52 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		format_options_sha256(t_flags *flags, char *msg, int fmt_nb)
 		flags->p_done = 1;
 		flags->p = 0;
 		ft_printf("%s", msg);
-		algo_sha256((unsigned char *)msg);
+		algo_sha256((unsigned char *)msg, 0);
 		ft_printf("\n");
 	}
 	else if (fmt_nb == 2)
@@ -31,7 +31,7 @@ static void		format_options_sha256(t_flags *flags, char *msg, int fmt_nb)
 		}
 		if (!flags->q && !flags->r)
 			ft_printf("SHA256 (%s) = ", msg);
-		algo_sha256((unsigned char *)file_to_string(msg));
+		algo_sha256((unsigned char *)file_to_string(msg), 1);
 		if (flags->r)
 			ft_printf(" %s", msg);
 		ft_printf("\n");
@@ -50,18 +50,18 @@ static void		output_formatting_sha256(t_flags *flags, char *msg, int is_file)
 			format_options_sha256(flags, msg, 2);
 		else if (flags->q)
 		{
-			algo_sha256((unsigned char *)msg);
+			algo_sha256((unsigned char *)msg, 0);
 			ft_printf("\n");
 		}
 		else if (flags->r)
 		{
-			algo_sha256((unsigned char *)msg);
+			algo_sha256((unsigned char *)msg, 0);
 			ft_printf(" \"%s\"\n", msg);
 		}
 		else if (!is_file)
 		{
 			ft_printf("SHA256 (\"%s\") = ", msg);
-			algo_sha256((unsigned char *)msg);
+			algo_sha256((unsigned char *)msg, 0);
 			ft_printf("\n");
 		}
 	}

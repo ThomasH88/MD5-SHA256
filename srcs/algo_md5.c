@@ -6,25 +6,11 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 14:59:50 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/13 10:13:39 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 11:03:43 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
-
-unsigned char			*auxiliary_functions(char *name, unsigned char *x,
-						unsigned char *y, unsigned char *z)
-{
-	if (name[0] == 'F')
-		return (bitwise_or(bitwise_and(x, y),
-				bitwise_and(bitwise_complement(x), z)));
-	else if (name[0] == 'G')
-		return (bitwise_or(bitwise_and(x, z),
-				bitwise_and(y, bitwise_complement(z))));
-	else if (name[0] == 'H')
-		return (bitwise_xor(x, bitwise_xor(y, z)));
-	return (bitwise_xor(y, bitwise_or(x, bitwise_complement(z))));
-}
 
 static void				padding_bits(unsigned char *new,
 							size_t msg_len, size_t new_len)
@@ -65,7 +51,7 @@ static void				print_message_digest(unsigned int msg[4])
 	}
 }
 
-void					algo_md5(unsigned char *s)
+void					algo_md5(unsigned char *s, int var)
 {
 	size_t			msg_len;
 	size_t			new_len;
@@ -78,6 +64,8 @@ void					algo_md5(unsigned char *s)
 	if (!(new = (unsigned char *)ft_strnew(new_len)))
 		exit(ft_printf("malloc error\n"));
 	u_char_copy(s, new, msg_len);
+	if (var == 1)
+		free(s);
 	padding_bits(new, msg_len, new_len);
 	words_0[0] = WORD_A;
 	words_0[1] = WORD_B;

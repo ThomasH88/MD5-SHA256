@@ -6,21 +6,11 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 13:48:11 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/12 11:19:44 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 11:08:13 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
-
-/*static void		flags_state(t_flags *flags)*/
-/*{*/
-	/*printf("p      = %d\n", flags->p);*/
-	/*printf("p_done = %d\n", flags->p_done);*/
-	/*printf("q      = %d\n", flags->q);*/
-	/*printf("r      = %d\n", flags->r);*/
-	/*printf("s      = %d\n", flags->s);*/
-	/*printf("done   = %d\n", flags->done);*/
-/*}*/
 
 static void		format_options_md5(t_flags *flags, char *msg, int fmt_nb)
 {
@@ -29,7 +19,7 @@ static void		format_options_md5(t_flags *flags, char *msg, int fmt_nb)
 		flags->p_done = 1;
 		flags->p = 0;
 		ft_printf("%s", msg);
-		algo_md5((unsigned char *)msg);
+		algo_md5((unsigned char *)msg, 0);
 		ft_printf("\n");
 	}
 	else if (fmt_nb == 2)
@@ -41,7 +31,7 @@ static void		format_options_md5(t_flags *flags, char *msg, int fmt_nb)
 		}
 		if (!flags->q && !flags->r)
 			ft_printf("MD5 (%s) = ", msg);
-		algo_md5((unsigned char *)file_to_string(msg));
+		algo_md5((unsigned char *)file_to_string(msg), 1);
 		if (flags->r)
 			ft_printf(" %s", msg);
 		ft_printf("\n");
@@ -60,18 +50,18 @@ static void		output_formatting_md5(t_flags *flags, char *msg, int is_file)
 			format_options_md5(flags, msg, 2);
 		else if (flags->q)
 		{
-			algo_md5((unsigned char *)msg);
+			algo_md5((unsigned char *)msg, 0);
 			ft_printf("\n");
 		}
 		else if (flags->r)
 		{
-			algo_md5((unsigned char *)msg);
+			algo_md5((unsigned char *)msg, 0);
 			ft_printf(" \"%s\"\n", msg);
 		}
 		else if (!is_file)
 		{
 			ft_printf("MD5 (\"%s\") = ", msg);
-			algo_md5((unsigned char *)msg);
+			algo_md5((unsigned char *)msg, 0);
 			ft_printf("\n");
 		}
 	}
@@ -79,7 +69,7 @@ static void		output_formatting_md5(t_flags *flags, char *msg, int is_file)
 
 static void		ft_md5_helper(char **args, t_flags *flags, int *i, int j)
 {
-	if(args[*i][++j])
+	if (args[*i][++j])
 	{
 		if (update_flags(flags, args[*i], &j) == 1)
 		{

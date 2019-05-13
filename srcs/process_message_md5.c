@@ -6,7 +6,7 @@
 /*   By: tholzheu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 18:57:21 by tholzheu          #+#    #+#             */
-/*   Updated: 2019/05/13 10:13:36 by tholzheu         ###   ########.fr       */
+/*   Updated: 2019/05/13 11:18:38 by tholzheu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 ** Number of rotations table
 */
-int rot_table[64] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17,
+int g_rot_table[64] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17,
 	22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 4, 11, 16, 23,
 	4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21,
 	6, 10, 15, 21, 6, 10, 15, 21};
@@ -23,7 +23,7 @@ int rot_table[64] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17,
 /*
 ** table constructed from the sine wave
 */
-int sine_table[64] = {
+int g_sine_table[64] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 	0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -41,33 +41,30 @@ int sine_table[64] = {
 	0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
-static unsigned char	*aux_processing(int i, unsigned int words[4], unsigned int *g)
+static unsigned int		aux_processing(int i, unsigned int words[4],
+										unsigned int *g)
 {
-	unsigned char	*u_words[3];
-
-	u_words[0] = uint_to_uchar_ptr(words[1]);
-	u_words[1] = uint_to_uchar_ptr(words[2]);
-	u_words[2] = uint_to_uchar_ptr(words[3]);
 	if (i >= 0 && i <= 15)
 	{
 		*g = i;
-		return (auxiliary_functions("F", u_words[0], u_words[1], u_words[2]));
+		return ((words[1] & words[2]) | (~words[1] & words[3]));
 	}
 	else if (i >= 16 && i <= 31)
 	{
 		*g = (5 * (i) + 1) % 16;
-		return (auxiliary_functions("G", u_words[0], u_words[1], u_words[2]));
+		return ((words[1] & words[3]) | (~words[3] & words[2]));
 	}
 	else if (i >= 32 && i <= 47)
 	{
 		*g = (3 * i + 5) % 16;
-		return (auxiliary_functions("H", u_words[0], u_words[1], u_words[2]));
+		return (words[1] ^ words[2] ^ words[3]);
 	}
 	*g = (7 * i) % 16;
-	return (auxiliary_functions("I", u_words[0], u_words[1], u_words[2]));
+	return (words[2] ^ (words[1] | ~words[3]));
 }
 
-static void				chunk_to_words(unsigned int m[16], unsigned char *new, int i)
+static void				chunk_to_words(unsigned int m[16], unsigned char *new,
+										int i)
 {
 	int				j;
 	int				k;
@@ -92,19 +89,8 @@ static void				chunk_to_words(unsigned int m[16], unsigned char *new, int i)
 	}
 }
 
-/*void					print_chunk(unsigned int m[16])*/
-/*{*/
-	/*int		i;*/
-
-	/*i = 0;*/
-	/*while (i < 16)*/
-	/*{*/
-		/*printf("[%2d] %u\n", i, m[i]);*/
-		/*i++;*/
-	/*}*/
-/*}*/
-
-static void				update_words(unsigned int words_0[4], unsigned int words[4], int update)
+static void				update_words(unsigned int words_0[4],
+									unsigned int words[4], int update)
 {
 	if (update == 1)
 	{
@@ -122,7 +108,8 @@ static void				update_words(unsigned int words_0[4], unsigned int words[4], int 
 	}
 }
 
-void					process_message(unsigned char *new, size_t new_len, unsigned int words_0[4])
+void					process_message(unsigned char *new,
+									size_t new_len, unsigned int words_0[4])
 {
 	int					i[2];
 	unsigned int		words[4];
@@ -139,12 +126,12 @@ void					process_message(unsigned char *new, size_t new_len, unsigned int words_
 		i[1] = -1;
 		while (++i[1] < 64)
 		{
-			f = uchar_ptr_to_uint(aux_processing(i[1], words, &g));
-			f = f + words[0] + sine_table[i[1]] + m[g];
+			f = aux_processing(i[1], words, &g);
+			f = f + words[0] + g_sine_table[i[1]] + m[g];
 			words[0] = words[3];
 			words[3] = words[2];
 			words[2] = words[1];
-			words[1] = words[1] + leftrotate(f, rot_table[i[1]]);
+			words[1] = words[1] + leftrotate(f, g_rot_table[i[1]]);
 		}
 		update_words(words_0, words, 2);
 		i[0]++;
